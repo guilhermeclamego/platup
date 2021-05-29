@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:platup/pages/login.page.dart';
+import 'package:platup/src/components/login.page.dart';
 
 void main() => runApp(MyApp());
 

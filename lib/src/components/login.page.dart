@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:platup/Services/loginService.dart' as loginService;
+import 'package:platup/src/services/login.service.dart' as loginService;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -7,11 +7,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  void loginHandler() => loginService.loginService();
+  void loginHandler(usuario, senha) =>
+      loginService.loginService(usuario, senha);
 
   @override
   Widget build(BuildContext context) {
     var usuarioController = TextEditingController();
+    var senhaController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(title: const Text('PlatUp')),
       backgroundColor: Colors.white,
@@ -33,6 +36,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Divider(),
               TextFormField(
+                controller: senhaController,
                 obscureText: true,
                 keyboardType: TextInputType.text,
                 style: new TextStyle(color: Colors.black, fontSize: 30),
@@ -43,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
               Divider(),
               ElevatedButton(
                 onPressed: () =>
-                    {print(usuarioController.text)}, //loginHandler,
+                    loginHandler(usuarioController.text, senhaController.text),
                 child: Text(
                   "Entrar",
                   style: TextStyle(color: Colors.white),
