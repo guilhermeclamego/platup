@@ -11,6 +11,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    var usuarioController = TextEditingController();
     return Scaffold(
       appBar: AppBar(title: const Text('PlatUp')),
       backgroundColor: Colors.white,
@@ -22,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextFormField(
+                controller: usuarioController,
                 autofocus: true,
                 keyboardType: TextInputType.text,
                 style: new TextStyle(color: Colors.black, fontSize: 25),
@@ -40,7 +42,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Divider(),
               ElevatedButton(
-                onPressed: loginHandler,
+                onPressed: () =>
+                    {print(usuarioController.text)}, //loginHandler,
                 child: Text(
                   "Entrar",
                   style: TextStyle(color: Colors.white),
