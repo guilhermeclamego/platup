@@ -1,5 +1,5 @@
 class Usuario {
-  String username;
+  String usuario;
   String senha;
 
   Usuario(this.usuario, this.senha);
