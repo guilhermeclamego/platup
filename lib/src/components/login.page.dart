@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
     var senhaController = TextEditingController();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('PlatUp')),
+      appBar: AppBar(centerTitle: true, title: const Text('PlatUp')),
       backgroundColor: Colors.white,
       body: Padding(
           padding: EdgeInsets.all(20),
