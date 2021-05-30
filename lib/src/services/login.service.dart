@@ -1,12 +1,13 @@
 import 'package:http/http.dart' as http;
-import 'package:platup/src/shared/models/usuario.model.dart' as usuarioModel;
+import 'package:platup/src/shared/models/usuario.dart' as usuarioModel;
 
-void loginService(usuario, senha) async {
-  var jsonUsuario = new usuarioModel.Usuario(usuario, senha).toJson();
-  print(jsonUsuario);
+Future<bool> loginService(String username, String password) async {
+  usuarioModel.Usuario oUsuario = new usuarioModel.Usuario(username, password);
+  var jsonUsuario = oUsuario.toJson();
+  print(jsonUsuario.toString());
   var headers = {'Content-Type': 'application/json'};
   var request =
-      http.Request('POST', Uri.parse('https://3e76e4fc3f1b.ngrok.io/login'));
+      http.Request('POST', Uri.parse('https://636dc71c06a0.ngrok.io/login'));
   request.body = jsonUsuario.toString();
   request.headers.addAll(headers);
 
@@ -14,7 +15,9 @@ void loginService(usuario, senha) async {
 
   if (response.statusCode == 200) {
     print(await response.stream.bytesToString());
+    return true;
   } else {
     print(response.reasonPhrase);
+    return false;
   }
 }
