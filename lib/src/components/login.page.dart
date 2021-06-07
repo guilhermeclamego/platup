@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:platup/src/components/dashboard.page.dart';
 import 'package:platup/src/services/login.service.dart' as loginService;
 
 class LoginPage extends StatefulWidget {
@@ -7,13 +9,29 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  void loginHandler(usuario, senha) =>
-      loginService.loginService(usuario, senha);
+  void loginHandler(usuario, senha) async {
+    if (await loginService.loginService(usuario, senha)) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => DarshboardPage()),
+      );
+
+      return;
+    }
+
+    Fluttertoast.showToast(
+        msg: "Usuário ou Senha Inválido",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
 
   @override
   Widget build(BuildContext context) {
-    var usuarioController = TextEditingController();
-    var senhaController = TextEditingController();
+    var usuarioController = TextEditingController(text: "su");
+    var senhaController = TextEditingController(text: "123");
 
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: const Text('PlatUp')),

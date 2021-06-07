@@ -1,23 +1,22 @@
+import 'dart:async';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:platup/src/shared/models/usuario.dart' as usuarioModel;
+import 'package:platup/src/common/storage.dart' show storage;
 
 Future<bool> loginService(String username, String password) async {
   usuarioModel.Usuario oUsuario = new usuarioModel.Usuario(username, password);
-  var jsonUsuario = oUsuario.toJson();
-  print(jsonUsuario.toString());
-  var headers = {'Content-Type': 'application/json'};
-  var request =
-      http.Request('POST', Uri.parse('https://636dc71c06a0.ngrok.io/login'));
-  request.body = jsonUsuario.toString();
-  request.headers.addAll(headers);
 
-  http.StreamedResponse response = await request.send();
+  final response = await http.post(Uri.parse('http://192.168.3.104:3000/login'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(oUsuario.toJson()));
 
   if (response.statusCode == 200) {
-    print(await response.stream.bytesToString());
+    Map<String, dynamic> resp = jsonDecode(response.body);
+    await storage.write(key: 'jwt-token', value: resp['token'].toString());
+
     return true;
   } else {
-    print(response.reasonPhrase);
     return false;
   }
 }
